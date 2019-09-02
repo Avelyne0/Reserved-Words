@@ -13,12 +13,16 @@ const questionsUrl = `${endpoint}/questions`
 
 const getQuestion = id => fetch(`${questionsUrl}/${id}`).then(res => res.json())
 const getQuestions = () => fetch(questionsUrl).then(res => res.json())
+
 const getGame = id => fetch(`${gamesUrl}/${id}`).then(res => res.json())
 const getGames = () => fetch(gamesUrl).then(res => res.json())
+
 const getRound = id => fetch(`${roundsUrl}/${id}`).then(res => res.json())
 const getRounds = () => fetch(roundsUrl).then(res => res.json())
+
 const getTeam = id => fetch(`${teamsUrl}/${id}`).then(res => res.json())
 const getTeams = () => fetch(teamsUrl).then(res => res.json())
+
 const getUser = id => fetch(`${usersUrl}/${id}`).then(res => res.json())
 const getUsers = () => fetch(usersUrl).then(res => res.json())
 
