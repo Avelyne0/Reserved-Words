@@ -34,11 +34,12 @@ const newGame = () => fetch(gamesUrl, {
   }
 }).then(res => res.json())
 
-const addTeam = (game_id) => fetch(teamsUrl, {
+const addTeams = (team1, team2) => fetch(teamsUrl, {
   method: 'POST',
-  body: {
-    game_id: game_id
-  },
+  body: JSON.stringify({
+    "team1": team1,
+    "team2": team2,
+  }),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -60,7 +61,7 @@ const addPlayers = (user, team_id) => fetch(usersUrl, {
 
 export default {
   newGame,
-  addTeam,
+  addTeams,
   addPlayers,
   getQuestion,
   getQuestions,
