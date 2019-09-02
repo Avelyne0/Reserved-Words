@@ -1,5 +1,5 @@
 let endpoint = null
-if (window.location.href.includes('heroku')) {
+if (window.location.href.includes('netlify')) {
   endpoint = 'https://reserved-words-backend.herokuapp.com';
 } else {
   endpoint = 'http://localhost:3000'
