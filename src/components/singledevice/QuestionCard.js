@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Grid } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 export default function QuestionCard({ word, taboo1, taboo2, taboo3, taboo4 }) {
   return (

@@ -10,7 +10,8 @@ export default function LandingPage({setGameMode}) {
             <Card.Content extra >
             <Icon className='inverted massive heart'></Icon>
             <Button value= "single" onClick={(e) => setGameMode(e)}>Single Device</Button>
-            <Button value= "multi" onClick={(e) => setGameMode(e)}>Multi Device</Button>
+            <Button value= "multi" >Multi Device</Button>
+            {/* onClick={(e) => setGameMode(e)} */}
             </Card.Content>
           </Card>
         </Grid.Row>

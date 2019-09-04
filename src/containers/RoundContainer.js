@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid, Container, Dimmer, Loader } from 'semantic-ui-react'
 import QuestionCard from '../components/singledevice/QuestionCard';
-import Countdown from 'react-countdown-now';
+import API from '../adapters/API';
+
 
 
 export default class RoundContainer extends Component {
@@ -10,7 +11,7 @@ export default class RoundContainer extends Component {
     minutes: 1,
     seconds: 0,
     score: 0,
-    index: 0
+    currentQuestion: null
   }
 
   componentDidMount() {
@@ -41,21 +42,36 @@ export default class RoundContainer extends Component {
 
   correctAnswer() {
     this.setState({
-      score: this.state.score + 1,
-      index: this.state.index + 1
+      score: this.state.score + 1
     })
+    this.props.onClickAnswer()
   }
 
   incorrectAnswer() {
     this.setState({
-      score: this.state.score - 1,
-      index: this.state.index + 1
+      score: this.state.score - 1
     })
+    this.props.onClickAnswer()
   }
 
   render() {
+    if (!this.props.question) {
+      return <Container>
+          <Dimmer active inverted>
+              <Loader inverted content='Loading' />
+          </Dimmer>
+      </Container>
+  }
+
+  if (this.state.seconds === 0){
+    return <div>
+      all done
+    </div>
+
+  }
+
     const { minutes, seconds } = this.state
-    const question = this.props.questions[this.state.index]
+
     return (
       <Grid container centered columns={2}>
         <Grid.Row centered columns={2}>
@@ -69,7 +85,7 @@ export default class RoundContainer extends Component {
           <Button width='4' floated='right' size='massive' circular positive><h1>{this.state.score}</h1></Button>
         </Grid.Row>
         <Grid.Row stretched>
-          <QuestionCard {...question} />
+          <QuestionCard {...this.props.question} />
         </Grid.Row>
         <Grid.Row verticalAlign='bottom'>
           <Button.Group size='massive' widths='2'>

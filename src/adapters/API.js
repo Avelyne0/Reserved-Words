@@ -26,6 +26,8 @@ const getTeams = () => fetch(teamsUrl).then(res => res.json())
 const getUser = id => fetch(`${usersUrl}/${id}`).then(res => res.json())
 const getUsers = () => fetch(usersUrl).then(res => res.json())
 
+const getRandomQuestion = id => fetch(`${questionsUrl}/${id}`).then(res => res.json())
+
 const newGame = () => fetch(gamesUrl, {
   method: 'POST',
   headers: {
@@ -63,6 +65,7 @@ export default {
   newGame,
   addTeams,
   addPlayers,
+  getRandomQuestion,
   getQuestion,
   getQuestions,
   getGame,
