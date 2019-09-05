@@ -8,8 +8,8 @@ import API from '../adapters/API';
 export default class RoundContainer extends Component {
 
   state = {
-    minutes: 1,
-    seconds: 0,
+    minutes: 0,
+    seconds: 1,
     score: 0,
     currentQuestion: null
   }
@@ -17,7 +17,6 @@ export default class RoundContainer extends Component {
   componentDidMount() {
     this.myInterval = setInterval(() => {
       const { seconds, minutes } = this.state
-
       if (seconds > 0) {
         this.setState(({ seconds }) => ({
           seconds: seconds - 1
@@ -26,6 +25,7 @@ export default class RoundContainer extends Component {
       if (seconds === 0) {
         if (minutes === 0) {
           clearInterval(this.myInterval)
+          this.props.roundComplete(this.state.score)
         } else {
           this.setState(({ minutes }) => ({
             minutes: minutes - 1,
@@ -57,18 +57,11 @@ export default class RoundContainer extends Component {
   render() {
     if (!this.props.question) {
       return <Container>
-          <Dimmer active inverted>
-              <Loader inverted content='Loading' />
-          </Dimmer>
+        <Dimmer active inverted>
+          <Loader inverted content='Loading' />
+        </Dimmer>
       </Container>
-  }
-
-  if (this.state.seconds === 0){
-    return <div>
-      all done
-    </div>
-
-  }
+    }
 
     const { minutes, seconds } = this.state
 
@@ -77,10 +70,11 @@ export default class RoundContainer extends Component {
         <Grid.Row centered columns={2}>
 
           <Button width='4' floated='left' size='massive' circular negative>
-          { minutes === 0 && seconds === 0
-            ? <h1>Time's Up</h1>
-                    : <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
-                }
+            {
+              minutes === 0 && seconds === 0
+                ? <h1>Time's Up</h1>
+                : <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+            }
           </Button>
           <Button width='4' floated='right' size='massive' circular positive><h1>{this.state.score}</h1></Button>
         </Grid.Row>
@@ -95,7 +89,6 @@ export default class RoundContainer extends Component {
           </Button.Group>
         </Grid.Row>
       </Grid>
-
     )
   }
 }
