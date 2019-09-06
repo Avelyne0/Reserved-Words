@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Grid, Container, Dimmer, Loader } from 'semantic-ui-react'
+import { Button, Grid, Container, Dimmer, Loader, Icon } from 'semantic-ui-react'
 import QuestionCard from '../components/singledevice/QuestionCard';
 import API from '../adapters/API';
 
@@ -8,10 +8,9 @@ import API from '../adapters/API';
 export default class RoundContainer extends Component {
 
   state = {
-    minutes: 0,
-    seconds: 1,
-    score: 0,
-    currentQuestion: null
+    minutes: 1,
+    seconds: 0,
+    score: 0
   }
 
   componentDidMount() {
@@ -57,8 +56,14 @@ export default class RoundContainer extends Component {
   render() {
     if (!this.props.question) {
       return <Container>
-        <Dimmer active inverted>
-          <Loader inverted content='Loading' />
+        <Dimmer 
+        active 
+        inverted
+        >
+          <Loader 
+          inverted 
+          content='Loading' 
+          />
         </Dimmer>
       </Container>
     }
@@ -66,26 +71,63 @@ export default class RoundContainer extends Component {
     const { minutes, seconds } = this.state
 
     return (
-      <Grid container centered columns={2}>
-        <Grid.Row centered columns={2}>
-
-          <Button width='4' floated='left' size='massive' circular negative>
+      <Grid 
+      container
+      centered 
+      columns={2}
+      >
+        <Grid.Row 
+        centered 
+        columns={2}
+        >
+          <Button
+            width='4'
+            floated='left'
+            size='huge'
+            circular
+            negative
+            >
             {
               minutes === 0 && seconds === 0
-                ? <h1>Time's Up</h1>
-                : <h1>{minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                ?
+                <h2><Icon name='exclamation'/>Time's Up</h2>
+                :
+                <h2><Icon name='stopwatch'/>{minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h2>
             }
           </Button>
-          <Button width='4' floated='right' size='massive' circular positive><h1>{this.state.score}</h1></Button>
+          <Button
+            width='4'
+            floated='right'
+            size='huge'
+            circular
+            positive
+            >
+            <h2>{
+              this.state.score
+            }</h2>
+          </Button>
         </Grid.Row>
         <Grid.Row stretched>
           <QuestionCard {...this.props.question} />
         </Grid.Row>
         <Grid.Row verticalAlign='bottom'>
-          <Button.Group size='massive' widths='2'>
-            <Button negative onClick={() => this.incorrectAnswer()}>Oops!</Button>
+          <Button.Group 
+          size='massive' 
+          widths='2'
+          >
+            <Button
+              negative
+              onClick={() => this.incorrectAnswer()}
+              >
+              Oops!
+            </Button>
             <Button.Or />
-            <Button positive onClick={() => this.correctAnswer()}>They Got It</Button>
+            <Button
+              positive
+              onClick={() => this.correctAnswer()}
+              >
+              They Got It
+            </Button>
           </Button.Group>
         </Grid.Row>
       </Grid>

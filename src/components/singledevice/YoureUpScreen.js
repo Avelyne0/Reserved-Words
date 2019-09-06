@@ -18,7 +18,15 @@ export default function YoureUpScreen({begin, user, score1, score2}) {
             <Card.Header as='h1'>Hey, {user}!</Card.Header>
             <Card.Header as='h1'>You're up</Card.Header>
             <Card.Content extra >
-            team1: {score1 || null}, team2: {score2 || null}
+            {
+              score1 || score2 
+              ? 
+              <div>
+              team1: {score1 || null}, team2: {score2 || null}
+              </div>
+              :
+              null
+            }
             <Button onClick={begin}>Begin</Button>
             </Card.Content>
           </Card>

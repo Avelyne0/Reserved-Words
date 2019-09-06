@@ -9,18 +9,18 @@ export default class SingleLanding extends React.Component {
     this.state = {
       team1: {
         game_id: null,
-        user1: 'Bish',
-        user2: 'Bash',
-        user3: 'Bosh',
+        user1: '',
+        user2: '',
+        user3: '',
         user4: '',
         user5: '',
         user6: ''
       },
       team2: {
         game_id: null,
-        user1: 'Eenie',
-        user2: 'Meanie',
-        user3: 'Minie',
+        user1: '',
+        user2: '',
+        user3: '',
         user4: '',
         user5: '',
         user6: ''

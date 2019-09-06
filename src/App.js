@@ -7,8 +7,9 @@ import MultiLanding from './components/multidevice/MultiLanding';
 // import QRCodeReader from './components/multidevice/QRCodeReader';
 // import QRCodeGenerator from './components/multidevice/QRCodeGenerator';
 import SingleLanding from './components/singledevice/SingleLanding';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid, Container, Icon, Card } from 'semantic-ui-react';
 import YoureUpScreen from './components/singledevice/YoureUpScreen';
+import { thisTypeAnnotation } from '@babel/types';
 
 class App extends Component {
 
@@ -40,13 +41,15 @@ class App extends Component {
 
   addTeams = teams => {
     API.addTeams(teams.team1, teams.team2)
-      .then(data => this.setState({ ...data, currentUser: data.teams[0].users[0].name }))
+      .then(data =>
+        this.setState({ ...data, currentUser: data.teams[0].users[0].name }))
       .then(this.setCurrentUser)
       .then(this.setState({ ready: true }))
   }
 
   fetchNewQuestion = () => {
-    const availableQuestions = this.state.questions.filter(question => !(this.state.askedQuestionIds.includes(question.id)))
+    const availableQuestions = this.state.questions.filter(question =>
+      !(this.state.askedQuestionIds.includes(question.id)))
     const newQuestion = availableQuestions[Math.floor((Math.random() * availableQuestions.length))]
     this.setState({ currentQuestion: newQuestion })
   }
@@ -57,27 +60,31 @@ class App extends Component {
   }
 
   onRoundComplete = (score) => {
+    const userIndex = Math.floor(this.state.roundIndex / 2)
     const newRoundIndex = this.state.roundIndex + 1
+    const currentTeam = (this.state.roundIndex % 2)
+    const newCurrentTeam = newRoundIndex % 2
     if (newRoundIndex < this.state.userCount) {
+      const newTeamsArray = [...this.state.teams]
+      const newUsersArray = [...this.state.teams[currentTeam].users]
+      newUsersArray[userIndex] = {...newUsersArray[userIndex], score: score }
+      newTeamsArray[currentTeam] = {
+        ...this.state.teams[currentTeam],
+        users: newUsersArray
+      }
       this.setState({
         gameLive: false,
         roundIndex: newRoundIndex,
-        teams: [...this.state.teams, { // spread functions are super weird
-          [this.state.currentTeam]: {
-            users: {
-              [this.state.roundIndex]: { score: score }
-            }
-          }
-        }]
+        teams: newTeamsArray
       })
       this.fetchNewQuestion()
-      this.swapTeams()
+      this.setState({ currentTeam: newCurrentTeam })
       this.incrementUser()
     } else {
       this.setState({
         gameLive: false,
         gameOver: true
-      }) // win condition
+      })
     }
   }
 
@@ -100,6 +107,7 @@ class App extends Component {
   }
 
   getTeamScore = (i) => {
+
     if (this.state.teams.length > 0) {
       const teamScore = this.state.teams[i].users.reduce(function (prev, cur) {
         return prev + cur.score;
@@ -108,7 +116,9 @@ class App extends Component {
     }
   }
 
-  beginGame = () => this.setState({ gameLive: true })
+  beginGame = () => this.setState({
+    gameLive: true
+  })
 
   renderLandingPage(gameMode) {
     return (
@@ -163,13 +173,32 @@ class App extends Component {
       )
     }
 
-    if (this.state.gameOver) {
+    if (this.state.gameOver && !this.state.gameLive) {
       return (
         <Container fluid>
-          <Grid centered>
-            <div>
-              game over, someone done won
-            </div>
+          <Grid>
+            <Grid centered
+              container
+              columns={2}>
+              <Grid.Row stretched>
+                <Card>
+                  <Card.Header as='h1'>Game Over</Card.Header>
+                  <Card.Content >
+                    <h2><Icon name='trophy' />
+                      game over, someone done won</h2>
+                    {this.getTeamScore(0)} : {this.getTeamScore(1)}
+                    <Card.Header as='h1'>
+                      {
+                        this.state.teams.map(team =>
+                          team.users ? team.users.map(user =>
+                            <div>{user.name}: {user.score}
+                            </div>) : null)
+                      }
+                    </Card.Header>
+                  </Card.Content>
+                </Card>
+              </Grid.Row>
+            </Grid>
           </Grid>
         </Container>
       )
