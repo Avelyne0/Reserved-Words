@@ -9,8 +9,8 @@ export default class SingleLanding extends React.Component {
     this.state = {
       team1: {
         game_id: null,
-        user_1: 'Sam',
-        user_2: 'Ed',
+        user_1: '',
+        user_2: '',
         user_3: '',
         user_4: '',
         user_5: '',
@@ -18,8 +18,8 @@ export default class SingleLanding extends React.Component {
       },
       team2: {
         game_id: null,
-        user_1: 'Danielle',
-        user_2: 'Toby',
+        user_1: '',
+        user_2: '',
         user_3: '',
         user_4: '',
         user_5: '',

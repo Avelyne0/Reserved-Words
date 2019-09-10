@@ -8,8 +8,8 @@ import API from '../adapters/API';
 export default class RoundContainer extends Component {
 
   state = {
-    minutes: 0,
-    seconds: 1,
+    minutes: 1,
+    seconds: 0,
     score: 0
   }
 
