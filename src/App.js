@@ -9,7 +9,6 @@ import MultiLanding from './components/multidevice/MultiLanding';
 import SingleLanding from './components/singledevice/SingleLanding';
 import { Grid, Container, Icon, Card } from 'semantic-ui-react';
 import YoureUpScreen from './components/singledevice/YoureUpScreen';
-import { thisTypeAnnotation } from '@babel/types';
 
 class App extends Component {
 
@@ -64,22 +63,27 @@ class App extends Component {
     const newRoundIndex = this.state.roundIndex + 1
     const currentTeam = (this.state.roundIndex % 2)
     const newCurrentTeam = newRoundIndex % 2
+    const newUserIndex = Math.floor(newRoundIndex / 2)
+    const newTeamsArray = [...this.state.teams]
+    const newUsersArray = [...this.state.teams[currentTeam].users]
+    newUsersArray[userIndex] = { ...newUsersArray[userIndex], score: score }
+    newTeamsArray[currentTeam] = {
+      ...this.state.teams[currentTeam],
+      users: newUsersArray
+    }
+    this.setState({
+      gameLive: false,
+      roundIndex: newRoundIndex,
+      teams: newTeamsArray,
+      currentTeam: newCurrentTeam
+    })
     if (newRoundIndex < this.state.userCount) {
-      const newTeamsArray = [...this.state.teams]
-      const newUsersArray = [...this.state.teams[currentTeam].users]
-      newUsersArray[userIndex] = {...newUsersArray[userIndex], score: score }
-      newTeamsArray[currentTeam] = {
-        ...this.state.teams[currentTeam],
-        users: newUsersArray
-      }
-      this.setState({
-        gameLive: false,
-        roundIndex: newRoundIndex,
-        teams: newTeamsArray
-      })
+      if ( this.state.teams[newCurrentTeam].users[newUserIndex] ) {
+      this.setState({ currentUser: (this.state.teams[newCurrentTeam].users[newUserIndex].name) })
       this.fetchNewQuestion()
-      this.setState({ currentTeam: newCurrentTeam })
-      this.incrementUser()
+      } else {
+        this.onRoundComplete()
+      }
     } else {
       this.setState({
         gameLive: false,
@@ -88,26 +92,7 @@ class App extends Component {
     }
   }
 
-  swapTeams = () => {
-    if (this.state.currentTeam === 0) {
-      this.setState({ currentTeam: 1 })
-    }
-    if (this.state.currentTeam === 1) {
-      this.setState({ currentTeam: 0 })
-    }
-  }
-
-  incrementUser = () => {
-    const userCounter = (this.state.roundCounter / 2) + 1
-    if (this.state.teams[this.state.currentTeam].users[userCounter]) {
-      this.setState({ roundCounter: userCounter })
-    } else {
-      this.swapTeams()
-    }
-  }
-
   getTeamScore = (i) => {
-
     if (this.state.teams.length > 0) {
       const teamScore = this.state.teams[i].users.reduce(function (prev, cur) {
         return prev + cur.score;
@@ -115,6 +100,7 @@ class App extends Component {
       return (teamScore)
     }
   }
+
 
   beginGame = () => this.setState({
     gameLive: true
@@ -191,8 +177,9 @@ class App extends Component {
                       {
                         this.state.teams.map(team =>
                           team.users ? team.users.map(user =>
-                            <div>{user.name}: {user.score}
-                            </div>) : null)
+                          user.name ? <div>{user.name}: {user.score}</div> 
+                          : null) 
+                          : null)
                       }
                     </Card.Header>
                   </Card.Content>
