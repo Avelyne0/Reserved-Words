@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Button, Icon, Container, Dimmer, Loader } from 'semantic-ui-react'
+import { Grid, Card, Button, Container, Dimmer, Loader } from 'semantic-ui-react'
 
 
 export default function YoureUpScreen({begin, user, score1, score2}) {

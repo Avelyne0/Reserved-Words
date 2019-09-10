@@ -43,14 +43,14 @@ export default class RoundContainer extends Component {
     this.setState({
       score: this.state.score + 1
     })
-    this.props.onClickAnswer()
+    this.props.onClickAnswer(this.props.question.id, this.state.score)
   }
 
   incorrectAnswer() {
     this.setState({
       score: this.state.score - 1
     })
-    this.props.onClickAnswer()
+    this.props.onClickAnswer(this.props.question.id, this.state.score)
   }
 
   render() {

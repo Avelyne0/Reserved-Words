@@ -1,9 +1,9 @@
-let endpoint = null
-if (window.location.href.includes('netlify')) {
-  endpoint = 'https://reserved-words-backend.herokuapp.com';
-} else {
-  endpoint = 'http://localhost:3000'
-}
+// let endpoint = null
+// if (window.location.href.includes('netlify')) {
+  // const endpoint = 'https://reserved-words-backend.herokuapp.com';
+// } else {
+  const endpoint = 'http://localhost:3000'
+// }
 
 const gamesUrl = `${endpoint}/games`
 const roundsUrl = `${endpoint}/rounds`
@@ -60,20 +60,38 @@ const addPlayers = (user, team_id) => fetch(usersUrl, {
   }
 }).then(res => res.json())
 
+const updateScore = (userId, score) => fetch(`${usersUrl}/${userId}`, {
+  method: 'PATCH',
+  body: {
+    score: score
+  },
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+}).then(res => res.json())
+
 
 export default {
   newGame,
   addTeams,
   addPlayers,
   getRandomQuestion,
+
   getQuestion,
   getQuestions,
+
   getGame,
   getGames,
+
   getRound,
   getRounds,
+  
   getTeam,
   getTeams,
+  
   getUser,
-  getUsers
+  getUsers,
+
+  updateScore
 }

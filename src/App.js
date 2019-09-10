@@ -53,7 +53,10 @@ class App extends Component {
     this.setState({ currentQuestion: newQuestion })
   }
 
-  onClickAnswer = (questionId) => {
+  onClickAnswer = (questionId, score) => {
+    const userIndex = Math.floor(this.state.roundIndex / 2)
+    const userId = this.state.teams[this.state.currentTeam].users[userIndex].id
+    API.updateScore(userId, score)
     this.setState({ askedQuestionIds: [...this.state.askedQuestionIds, questionId] })
     this.fetchNewQuestion()
   }
