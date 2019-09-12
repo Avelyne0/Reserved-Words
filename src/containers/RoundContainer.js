@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Grid, Container, Dimmer, Loader, Icon } from 'semantic-ui-react'
 import QuestionCard from '../components/singledevice/QuestionCard';
-import API from '../adapters/API';
 
 
 

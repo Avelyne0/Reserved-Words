@@ -81,9 +81,9 @@ class App extends Component {
       currentTeam: newCurrentTeam
     })
     if (newRoundIndex < this.state.userCount) {
-      if ( this.state.teams[newCurrentTeam].users[newUserIndex] ) {
-      this.setState({ currentUser: (this.state.teams[newCurrentTeam].users[newUserIndex].name) })
-      this.fetchNewQuestion()
+      if (this.state.teams[newCurrentTeam].users[newUserIndex]) {
+        this.setState({ currentUser: (this.state.teams[newCurrentTeam].users[newUserIndex].name) })
+        this.fetchNewQuestion()
       } else {
         this.onRoundComplete()
       }
@@ -173,16 +173,21 @@ class App extends Component {
                 <Card>
                   <Card.Header as='h1'>Game Over</Card.Header>
                   <Card.Content >
-                    <h2><Icon name='trophy' />
-                      game over, someone done won</h2>
-                    {this.getTeamScore(0)} : {this.getTeamScore(1)}
+                    <h2><Icon name='trophy' />Game over!</h2>
+                    <Card.Header as='h1'>{`${this.getTeamScore(0)} : ${this.getTeamScore(1)}`}</Card.Header>
+                    <h2>
+                      {(this.getTeamScore(0) > this.getTeamScore(1)) ? <div>Team 0 wins! {this.state.teams[0].users.map(user => user.name ? `${user.name} ` : null)}</div> : null}
+                      {(this.getTeamScore(0) < this.getTeamScore(1)) ? <div>Team 1 wins! {this.state.teams[1].users.map(user => user.name ? `${user.name} ` : null)}</div> : null}
+                      {(this.getTeamScore(0) === this.getTeamScore(1)) ? "Somehow there has been a draw!" : null}
+                    </h2>
+                    <br/>
                     <Card.Header as='h1'>
                       {
                         this.state.teams.map(team =>
                           team.users ? team.users.map(user =>
-                          user.name ? <div>{user.name}: {user.score}</div> 
-                          : null) 
-                          : null)
+                            user.name ? <div>{user.name}: {user.score}</div>
+                              : null)
+                            : null)
                       }
                     </Card.Header>
                   </Card.Content>

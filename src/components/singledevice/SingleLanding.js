@@ -57,8 +57,8 @@ export default class SingleLanding extends React.Component {
             <Card.Header as='h1'>Team 1</Card.Header>
             <Card.Content extra >
                 <Form.Group widths="equal">
-                  <Form.Input size='large' placeholder="Name" value={this.state.team1.user_1} name="user_1" onChange={e => this.changeState(e.target, "team1")} />
-                  <Form.Input size='large' placeholder="Name" value={this.state.team1.user_2} name="user_2" onChange={e => this.changeState(e.target, "team1")} />
+                  <Form.Input size='large' placeholder="Name" value={this.state.team1.user_1} name="user_1" onChange={e => this.changeState(e.target, "team1")} required/>
+                  <Form.Input size='large' placeholder="Name" value={this.state.team1.user_2} name="user_2" onChange={e => this.changeState(e.target, "team1")} required/>
                   <Form.Input size='large' placeholder="Name" value={this.state.team1.user_3} name="user_3" onChange={e => this.changeState(e.target, "team1")} />
                   <Form.Input size='large' placeholder="Name" value={this.state.team1.user_4} name="user_4" onChange={e => this.changeState(e.target, "team1")} />
                   <Form.Input size='large' placeholder="Name" value={this.state.team1.user_5} name="user_5" onChange={e => this.changeState(e.target, "team1")} />
@@ -70,8 +70,8 @@ export default class SingleLanding extends React.Component {
             <Card.Header as='h1'>Team 2</Card.Header>
             <Card.Content extra >
                 <Form.Group widths="equal">
-                  <Form.Input size='large' placeholder="Name" value={this.state.team2.user_1} name="user_1" onChange={e => this.changeState(e.target, "team2")} />
-                  <Form.Input size='large' placeholder="Name" value={this.state.team2.user_2} name="user_2" onChange={e => this.changeState(e.target, "team2")} />
+                  <Form.Input size='large' placeholder="Name" value={this.state.team2.user_1} name="user_1" onChange={e => this.changeState(e.target, "team2")} required/>
+                  <Form.Input size='large' placeholder="Name" value={this.state.team2.user_2} name="user_2" onChange={e => this.changeState(e.target, "team2")} required/>
                   <Form.Input size='large' placeholder="Name" value={this.state.team2.user_3} name="user_3" onChange={e => this.changeState(e.target, "team2")} />
                   <Form.Input size='large' placeholder="Name" value={this.state.team2.user_4} name="user_4" onChange={e => this.changeState(e.target, "team2")} />
                   <Form.Input size='large' placeholder="Name" value={this.state.team2.user_5} name="user_5" onChange={e => this.changeState(e.target, "team2")} />

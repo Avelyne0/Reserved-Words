@@ -1,8 +1,8 @@
 // let endpoint = null
 // if (window.location.href.includes('netlify')) {
-  // const endpoint = 'https://reserved-words-backend.herokuapp.com';
+  const endpoint = 'https://reserved-words-backend.herokuapp.com';
 // } else {
-  const endpoint = 'http://localhost:3000'
+  // const endpoint = 'http://localhost:3000'
 // }
 
 const gamesUrl = `${endpoint}/games`
